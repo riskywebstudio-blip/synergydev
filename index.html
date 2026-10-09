@@ -44,7 +44,7 @@
         "description": "Jasa pembuatan website profesional untuk UMKM, toko online, company profile, dan portal berita.",
         "telephone": "+62-857-3768-1560",
         "email": "syinergydev@gmail.com",
-        "priceRange": "Rp500.000 - Rp2.000.000",
+        "priceRange": "Rp100.000 - Rp2.000.000",
         "areaServed": "ID",
         "contactPoint": {
           "@type": "ContactPoint",
@@ -94,15 +94,23 @@
       <a class="brand" href="#top" aria-label="SynergyDev - kembali ke atas">
         <img src="assets/logo.webp" alt="Logo SynergyDev" width="808" height="613" class="brand-logo">
       </a>
+      <button class="cart-btn cart-btn-mobile" type="button" aria-label="Buka keranjang" aria-controls="cart-drawer" aria-expanded="false">
+        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M7 18a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm10 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM1 2v2h2l3.6 7.6-1.4 2.4A2 2 0 0 0 7 17h12v-2H7.4l1.1-2h7.5a2 2 0 0 0 1.7-1l3.6-6.5A1 1 0 0 0 20.4 4H5.2l-.9-2H1z"/></svg>
+        <span class="cart-count" data-cart-count>0</span>
+      </button>
       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Buka menu">
         <span></span><span></span><span></span>
       </button>
       <nav id="site-nav" class="site-nav" aria-label="Navigasi utama">
-        <a href="#layanan">Layanan</a>
+        <a href="#produk">Produk</a>
         <a href="#fitur-pro">Fitur Pro</a>
         <a href="#proses">Proses</a>
         <a href="#portofolio">Portofolio</a>
         <a href="#faq">FAQ</a>
+        <button class="cart-btn" type="button" aria-label="Buka keranjang" aria-controls="cart-drawer" aria-expanded="false">
+          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M7 18a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm10 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM1 2v2h2l3.6 7.6-1.4 2.4A2 2 0 0 0 7 17h12v-2H7.4l1.1-2h7.5a2 2 0 0 0 1.7-1l3.6-6.5A1 1 0 0 0 20.4 4H5.2l-.9-2H1z"/></svg>
+          <span class="cart-count" id="cart-count">0</span>
+        </button>
         <a class="btn btn-primary btn-sm" href="https://wa.me/6285737681560?text=Halo%20SynergyDev%2C%20saya%20ingin%20konsultasi%20pembuatan%20website" target="_blank" rel="noopener noreferrer">Konsultasi Gratis</a>
       </nav>
     </div>
@@ -135,59 +143,283 @@
       </div>
     </section>
 
-    <!-- LAYANAN -->
-    <section id="layanan" class="section">
+    <!-- PRODUK -->
+    <section id="produk" class="section">
       <div class="container">
         <header class="section-head reveal">
-          <span class="eyebrow">Katalog Layanan</span>
-          <h2>Pilih Solusi yang Sesuai Bisnis Anda</h2>
-          <p>Dari website UMKM sederhana hingga platform custom untuk pertumbuhan berkelanjutan.</p>
+          <span class="eyebrow">Katalog Produk &amp; Layanan</span>
+          <h2>Pilih Paket, Masukkan ke Keranjang, Pesan via WhatsApp</h2>
+          <p>Harga mulai dari, sesuai kebutuhan dan tingkat kerumitan proyek Anda.</p>
         </header>
-        <div class="grid grid-3">
-          <article class="card reveal">
-            <h3>Website Profesional UMKM &amp; Bisnis Lokal</h3>
-            <p class="price">Mulai dari <strong>Rp500.000</strong></p>
-            <p>Cocok untuk Café &amp; Resto, Toko &amp; Retail, Salon &amp; Barbershop, hingga Fashion &amp; Konveksi.</p>
-            <ul class="check">
-              <li>Responsif di HP, tablet, dan komputer</li>
-              <li>Cepat, ringan, aman, dan stabil</li>
-              <li>SEO friendly</li>
-            </ul>
+        <div class="filters reveal" role="group" aria-label="Filter kategori produk">
+          <button class="chip is-active" type="button" data-filter="semua">Semua</button>
+          <button class="chip" type="button" data-filter="bisnis">Website Bisnis</button>
+          <button class="chip" type="button" data-filter="toko">Toko Online</button>
+          <button class="chip" type="button" data-filter="berita">Portal Berita</button>
+          <button class="chip" type="button" data-filter="landing">Landing Page</button>
+          <button class="chip" type="button" data-filter="custom">Custom</button>
+          <button class="chip" type="button" data-filter="maintenance">Maintenance</button>
+        </div>
+        <div class="grid grid-products" id="product-grid">
+          <article class="product reveal" data-id="umkm" data-name="Website Profesional UMKM & Bisnis Lokal" data-price="500000" data-recurring="0" data-cat="bisnis">
+            <div class="product-media">
+              <img src="assets/produk/p01-website-umkm.webp" alt="Banner Website Profesional UMKM & Bisnis Lokal dari SynergyDev" width="800" height="800" loading="lazy" decoding="async">
+              
+            </div>
+            <div class="product-body">
+              <span class="product-cat">Website Bisnis</span>
+              <h3>Website Profesional UMKM & Bisnis Lokal</h3>
+              <p class="product-desc">Tingkatkan kepercayaan pelanggan dan perluas jangkauan bisnis dengan website modern, cepat, dan mudah digunakan.</p>
+              <details class="product-detail">
+                <summary>Lihat fitur</summary>
+                <ul class="check"><li>Responsif di HP, tablet, dan komputer</li><li>Cepat, ringan, aman, dan stabil</li><li>SEO friendly, mudah ditemukan di Google</li></ul>
+                <p class="product-note">Café & Resto, Toko & Retail, Salon & Barbershop, Fashion & Konveksi</p>
+              </details>
+              <div class="product-buy">
+                <p class="price">Mulai dari <strong>Rp500.000</strong></p>
+                <button class="btn btn-primary btn-add" type="button" data-add="umkm">+ Keranjang</button>
+              </div>
+            </div>
           </article>
-          <article class="card reveal">
-            <h3>Website Toko Online (E-Commerce)</h3>
-            <p class="price">Mulai dari <strong>Rp1.000.000</strong></p>
-            <p>Platform e-commerce terintegrasi yang disesuaikan dengan produk dan pertumbuhan penjualan Anda.</p>
-            <ul class="check">
-              <li>Etalase produk dengan gambar, harga, dan kategori</li>
-              <li>Keranjang belanja</li>
-              <li>Checkout terhubung ke WhatsApp atau pembayaran</li>
-            </ul>
+          <article class="product reveal" data-id="toko" data-name="Website Toko Online (E-Commerce)" data-price="1000000" data-recurring="0" data-cat="toko">
+            <div class="product-media">
+              <img src="assets/produk/p07-toko-online.webp" alt="Banner Website Toko Online (E-Commerce) dari SynergyDev" width="800" height="800" loading="lazy" decoding="async">
+              
+            </div>
+            <div class="product-body">
+              <span class="product-cat">Toko Online</span>
+              <h3>Website Toko Online (E-Commerce)</h3>
+              <p class="product-desc">Solusi toko online terintegrasi, disesuaikan khusus untuk produk dan pertumbuhan penjualan Anda.</p>
+              <details class="product-detail">
+                <summary>Lihat fitur</summary>
+                <ul class="check"><li>Etalase produk dengan harga, kategori, dan keranjang</li><li>Checkout terhubung ke WhatsApp atau pembayaran</li></ul>
+                
+              </details>
+              <div class="product-buy">
+                <p class="price">Mulai dari <strong>Rp1.000.000</strong></p>
+                <button class="btn btn-primary btn-add" type="button" data-add="toko">+ Keranjang</button>
+              </div>
+            </div>
           </article>
-          <article class="card reveal">
-            <h3>Company Profile</h3>
-            <p class="price">Mulai dari <strong>Rp750.000</strong></p>
-            <p>Menyatukan teknologi, strategi, dan tim ahli untuk memaksimalkan potensi bisnis di era digital.</p>
+          <article class="product reveal" data-id="cp" data-name="Website Company Profile" data-price="750000" data-recurring="0" data-cat="bisnis">
+            <div class="product-media">
+              <img src="assets/produk/p03-company-profile.webp" alt="Banner Website Company Profile dari SynergyDev" width="800" height="800" loading="lazy" decoding="async">
+              
+            </div>
+            <div class="product-body">
+              <span class="product-cat">Website Bisnis</span>
+              <h3>Website Company Profile</h3>
+              <p class="product-desc">Menyatukan teknologi, strategi, dan tim ahli untuk memaksimalkan potensi bisnis di era digital.</p>
+              <details class="product-detail">
+                <summary>Lihat fitur</summary>
+                <ul class="check"><li>Desain kolaboratif yang disesuaikan bersama Anda</li><li>Berorientasi jangka panjang</li></ul>
+                
+              </details>
+              <div class="product-buy">
+                <p class="price">Mulai dari <strong>Rp750.000</strong></p>
+                <button class="btn btn-primary btn-add" type="button" data-add="cp">+ Keranjang</button>
+              </div>
+            </div>
           </article>
-          <article class="card reveal">
-            <h3>Custom Platform / Skala Pertumbuhan</h3>
-            <p class="price">Mulai dari <strong>Rp1.200.000 – Rp1.500.000</strong></p>
-            <p>Sistem yang disesuaikan khusus untuk perusahaan yang ingin mencapai pertumbuhan berkelanjutan.</p>
+          <article class="product reveal" data-id="custom-cp" data-name="Website Company Custom" data-price="1200000" data-recurring="0" data-cat="custom">
+            <div class="product-media">
+              <img src="assets/produk/p04-company-custom.webp" alt="Banner Website Company Custom dari SynergyDev" width="800" height="800" loading="lazy" decoding="async">
+              
+            </div>
+            <div class="product-body">
+              <span class="product-cat">Custom</span>
+              <h3>Website Company Custom</h3>
+              <p class="product-desc">Solusi strategis untuk menghadapi tantangan, menemukan peluang, dan mencapai pertumbuhan berkelanjutan.</p>
+              <details class="product-detail">
+                <summary>Lihat fitur</summary>
+                <ul class="check"><li>Strategi kolaboratif dan terintegrasi</li><li>Solusi terukur untuk skala bisnis jangka panjang</li></ul>
+                
+              </details>
+              <div class="product-buy">
+                <p class="price">Mulai dari <strong>Rp1.200.000</strong></p>
+                <button class="btn btn-primary btn-add" type="button" data-add="custom-cp">+ Keranjang</button>
+              </div>
+            </div>
           </article>
-          <article class="card reveal">
-            <h3>Portal Berita (Standar &amp; Premium)</h3>
-            <p class="price">Mulai dari <strong>Rp1.500.000 – Rp2.000.000</strong></p>
-            <p>Portal berita digital yang kredibel, terstruktur, siap trafik tinggi, dengan manajemen multi-kategori.</p>
+          <article class="product reveal" data-id="custom" data-name="Custom Website Skala Pertumbuhan" data-price="1500000" data-recurring="0" data-cat="custom">
+            <div class="product-media">
+              <img src="assets/produk/p11-custom-website.webp" alt="Banner Custom Website Skala Pertumbuhan dari SynergyDev" width="800" height="800" loading="lazy" decoding="async">
+              
+            </div>
+            <div class="product-body">
+              <span class="product-cat">Custom</span>
+              <h3>Custom Website Skala Pertumbuhan</h3>
+              <p class="product-desc">Solusi integrasi tingkat lanjut dengan sistem platform yang skalabel dan aman.</p>
+              <details class="product-detail">
+                <summary>Lihat fitur</summary>
+                <ul class="check"><li>Sistem platform yang skalabel dan aman</li><li>Tim ahli dari berbagai disiplin ilmu</li></ul>
+                
+              </details>
+              <div class="product-buy">
+                <p class="price">Mulai dari <strong>Rp1.500.000</strong></p>
+                <button class="btn btn-primary btn-add" type="button" data-add="custom">+ Keranjang</button>
+              </div>
+            </div>
           </article>
-          <article class="card reveal">
-            <h3>Landing Page Custom</h3>
-            <p class="price">Mulai dari <strong>Rp600.000</strong></p>
-            <p>Untuk properti, interior, dan jasa. Tampilkan portofolio, detail harga, dan tombol konsultasi cepat.</p>
+          <article class="product reveal" data-id="berita" data-name="Website Berita Berlisensi" data-price="1500000" data-recurring="0" data-cat="berita">
+            <div class="product-media">
+              <img src="assets/produk/p02-berita-berlisensi.webp" alt="Banner Website Berita Berlisensi dari SynergyDev" width="800" height="800" loading="lazy" decoding="async">
+              
+            </div>
+            <div class="product-body">
+              <span class="product-cat">Portal Berita</span>
+              <h3>Website Berita Berlisensi</h3>
+              <p class="product-desc">Portal berita digital yang kredibel, terstruktur, dan berlisensi dengan tata letak profesional.</p>
+              <details class="product-detail">
+                <summary>Lihat fitur</summary>
+                <ul class="check"><li>Headline berita yang dinamis</li><li>Kategori lengkap: Nasional, Ekonomi, Teknologi, Gaya Hidup, Olahraga</li><li>Performa cepat dan navigasi artikel mudah</li></ul>
+                
+              </details>
+              <div class="product-buy">
+                <p class="price">Mulai dari <strong>Rp1.500.000</strong></p>
+                <button class="btn btn-primary btn-add" type="button" data-add="berita">+ Keranjang</button>
+              </div>
+            </div>
           </article>
-          <article class="card reveal card-wide">
-            <h3>Tambah Fitur, Modul &amp; Maintenance</h3>
-            <p class="price">Mulai dari <strong>Rp100.000 – Rp500.000</strong></p>
-            <p>Integrasi modul baru, perpanjangan domain dan hosting, serta backup file website secara berkala.</p>
+          <article class="product reveal" data-id="berita-premium" data-name="Portal Berita Premium" data-price="2000000" data-recurring="0" data-cat="berita">
+            <div class="product-media">
+              <img src="assets/produk/p05-portal-berita-premium.webp" alt="Banner Portal Berita Premium dari SynergyDev" width="800" height="800" loading="lazy" decoding="async">
+              
+            </div>
+            <div class="product-body">
+              <span class="product-cat">Portal Berita</span>
+              <h3>Portal Berita Premium</h3>
+              <p class="product-desc">Portal berita kelas premium dengan infrastruktur digital terintegrasi, siap menampung trafik tinggi.</p>
+              <details class="product-detail">
+                <summary>Lihat fitur</summary>
+                <ul class="check"><li>Sistem manajemen berita tingkat lanjut (multi-kategori)</li><li>Desain eksklusif, elegan, dan high-traffic ready</li><li>Responsif optimal untuk seluler maupun desktop</li></ul>
+                
+              </details>
+              <div class="product-buy">
+                <p class="price">Mulai dari <strong>Rp2.000.000</strong></p>
+                <button class="btn btn-primary btn-add" type="button" data-add="berita-premium">+ Keranjang</button>
+              </div>
+            </div>
+          </article>
+          <article class="product reveal" data-id="landing-lumina-1" data-name="Landing Page Custom - Interior (Versi 1)" data-price="600000" data-recurring="0" data-cat="landing">
+            <div class="product-media">
+              <img src="assets/produk/p08-landing-lumina-v1.webp" alt="Banner Landing Page Custom - Interior (Versi 1) dari SynergyDev" width="800" height="800" loading="lazy" decoding="async">
+              
+            </div>
+            <div class="product-body">
+              <span class="product-cat">Landing Page</span>
+              <h3>Landing Page Custom - Interior (Versi 1)</h3>
+              <p class="product-desc">Platform web interaktif untuk menonjolkan portofolio interior, properti, atau jasa spesifik Anda.</p>
+              <details class="product-detail">
+                <summary>Lihat fitur</summary>
+                <ul class="check"><li>Etalase kategori layanan (Hunian, Ruang Kerja, Komersial)</li><li>Tombol portofolio dan konsultasi cepat</li></ul>
+                
+              </details>
+              <div class="product-buy">
+                <p class="price">Mulai dari <strong>Rp600.000</strong></p>
+                <button class="btn btn-primary btn-add" type="button" data-add="landing-lumina-1">+ Keranjang</button>
+              </div>
+            </div>
+          </article>
+          <article class="product reveal" data-id="landing-lumina-2" data-name="Landing Page Custom - Interior (Versi 2)" data-price="650000" data-recurring="0" data-cat="landing">
+            <div class="product-media">
+              <img src="assets/produk/p09-landing-lumina-v2.webp" alt="Banner Landing Page Custom - Interior (Versi 2) dari SynergyDev" width="800" height="800" loading="lazy" decoding="async">
+              
+            </div>
+            <div class="product-body">
+              <span class="product-cat">Landing Page</span>
+              <h3>Landing Page Custom - Interior (Versi 2)</h3>
+              <p class="product-desc">Landing page profesional dengan informasi terpadu dan transparan tentang keunggulan ruangan.</p>
+              <details class="product-detail">
+                <summary>Lihat fitur</summary>
+                <ul class="check"><li>Detail harga atau paket penawaran yang jelas</li><li>Informasi keunggulan ruangan untuk calon klien</li></ul>
+                
+              </details>
+              <div class="product-buy">
+                <p class="price">Mulai dari <strong>Rp650.000</strong></p>
+                <button class="btn btn-primary btn-add" type="button" data-add="landing-lumina-2">+ Keranjang</button>
+              </div>
+            </div>
+          </article>
+          <article class="product reveal" data-id="landing-nexora" data-name="Landing Page - Real Estate" data-price="600000" data-recurring="0" data-cat="landing">
+            <div class="product-media">
+              <img src="assets/produk/p10-landing-nexora.webp" alt="Banner Landing Page - Real Estate dari SynergyDev" width="800" height="800" loading="lazy" decoding="async">
+              
+            </div>
+            <div class="product-body">
+              <span class="product-cat">Landing Page</span>
+              <h3>Landing Page - Real Estate</h3>
+              <p class="product-desc">Platform real estate yang terhubung, efisien, dan canggih untuk agen properti, perumahan, dan developer lokal.</p>
+              <details class="product-detail">
+                <summary>Lihat fitur</summary>
+                <ul class="check"><li>Cocok untuk agen properti dan developer</li><li>Tampilan hunian dan properti yang menarik</li></ul>
+                
+              </details>
+              <div class="product-buy">
+                <p class="price">Mulai dari <strong>Rp600.000</strong></p>
+                <button class="btn btn-primary btn-add" type="button" data-add="landing-nexora">+ Keranjang</button>
+              </div>
+            </div>
+          </article>
+          <article class="product reveal" data-id="tambah-fitur" data-name="Tambah Fitur / Modul Baru" data-price="500000" data-recurring="0" data-cat="layanan">
+            <div class="product-media">
+              <img src="assets/produk/p06-tambah-fitur.webp" alt="Banner Tambah Fitur / Modul Baru dari SynergyDev" width="800" height="800" loading="lazy" decoding="async">
+              
+            </div>
+            <div class="product-body">
+              <span class="product-cat">Modul</span>
+              <h3>Tambah Fitur / Modul Baru</h3>
+              <p class="product-desc">Integrasi modul atau fitur baru secara mulus untuk bisnis yang terus berkembang.</p>
+              <details class="product-detail">
+                <summary>Lihat fitur</summary>
+                <ul class="check"><li>Integrasi modul atau fitur baru</li><li>Sistem yang saling terhubung dan fleksibel</li></ul>
+                <p class="product-note">Harga mulai dari Rp500.000, menyesuaikan kerumitan fitur</p>
+              </details>
+              <div class="product-buy">
+                <p class="price">Mulai dari <strong>Rp500.000</strong></p>
+                <button class="btn btn-primary btn-add" type="button" data-add="tambah-fitur">+ Keranjang</button>
+              </div>
+            </div>
+          </article>
+          <article class="product reveal" data-id="backup" data-name="Perpanjang Website + Backup File" data-price="150000" data-recurring="1" data-cat="maintenance">
+            <div class="product-media">
+              <img src="assets/produk/p12-perpanjang-backup.webp" alt="Banner Perpanjang Website + Backup File dari SynergyDev" width="800" height="800" loading="lazy" decoding="async">
+              <span class="product-tag">Berulang</span>
+            </div>
+            <div class="product-body">
+              <span class="product-cat">Maintenance</span>
+              <h3>Perpanjang Website + Backup File</h3>
+              <p class="product-desc">Perpanjangan website Anda agar tetap optimal sepanjang tahun, dengan pencadangan berkala.</p>
+              <details class="product-detail">
+                <summary>Lihat fitur</summary>
+                <ul class="check"><li>Perpanjangan domain & hosting tepat waktu</li><li>Backup file website secara berkala</li></ul>
+                <p class="product-note">Per siklus</p>
+              </details>
+              <div class="product-buy">
+                <p class="price">Mulai dari <strong>Rp150.000</strong> / siklus</p>
+                <button class="btn btn-primary btn-add" type="button" data-add="backup">+ Keranjang</button>
+              </div>
+            </div>
+          </article>
+          <article class="product reveal" data-id="maintenance" data-name="Perpanjang Website (Maintenance Standar)" data-price="100000" data-recurring="1" data-cat="maintenance">
+            <div class="product-media">
+              <img src="assets/produk/p13-maintenance.webp" alt="Banner Perpanjang Website (Maintenance Standar) dari SynergyDev" width="800" height="800" loading="lazy" decoding="async">
+              <span class="product-tag">Berulang</span>
+            </div>
+            <div class="product-body">
+              <span class="product-cat">Maintenance</span>
+              <h3>Perpanjang Website (Maintenance Standar)</h3>
+              <p class="product-desc">Pengelolaan website agar tetap aktif dan siap mendukung pertumbuhan bisnis berkelanjutan.</p>
+              <details class="product-detail">
+                <summary>Lihat fitur</summary>
+                <ul class="check"><li>Website tetap terkelola, aktif, dan terawat</li></ul>
+                <p class="product-note">Per siklus</p>
+              </details>
+              <div class="product-buy">
+                <p class="price">Mulai dari <strong>Rp100.000</strong> / siklus</p>
+                <button class="btn btn-primary btn-add" type="button" data-add="maintenance">+ Keranjang</button>
+              </div>
+            </div>
           </article>
         </div>
       </div>
@@ -297,6 +529,25 @@
     </section>
   </main>
 
+  <!-- KERANJANG -->
+  <div class="cart-overlay" id="cart-overlay" hidden></div>
+  <aside class="cart-drawer" id="cart-drawer" role="dialog" aria-modal="true" aria-labelledby="cart-title" hidden>
+    <div class="cart-head">
+      <h2 id="cart-title">Keranjang Anda</h2>
+      <button class="cart-close" type="button" aria-label="Tutup keranjang">&times;</button>
+    </div>
+    <ul class="cart-items" id="cart-items"></ul>
+    <p class="cart-empty" id="cart-empty">Keranjang masih kosong. Pilih produk dulu ya.</p>
+    <div class="cart-foot">
+      <div class="cart-sum"><span>Total sekali bayar</span><strong id="cart-total">Rp0</strong></div>
+      <p class="cart-recurring" id="cart-recurring" hidden></p>
+      <p class="cart-note">Harga final dikonfirmasi saat konsultasi. Pesanan dikirim ke WhatsApp kami.</p>
+      <button class="btn btn-primary btn-block" type="button" id="cart-checkout">Pesan via WhatsApp</button>
+      <button class="btn btn-ghost btn-block" type="button" id="cart-clear">Kosongkan keranjang</button>
+    </div>
+  </aside>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
   <footer class="site-footer">
     <div class="container footer-inner">
       <img src="assets/logo.webp" alt="SynergyDev" width="808" height="613" class="footer-logo" loading="lazy">
@@ -313,5 +564,6 @@
   </a>
 
   <script src="assets/main.js" defer></script>
+  <script src="assets/cart.js" defer></script>
 </body>
 </html>

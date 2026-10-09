@@ -30,3 +30,16 @@ Lakukan "cari dan ganti" pada seluruh file untuk teks `https://ganti-domain-anda
 ## Bantuan
 WhatsApp: +62 857-3768-1560
 Email: syinergydev@gmail.com
+
+## 8. Mengelola produk di katalog
+Setiap produk adalah satu blok `<article class="product">` di bagian `#produk` pada `index.html`.
+- Judul: teks di dalam `<h3>`.
+- Harga: ubah dua tempat: `data-price="..."` (angka tanpa titik, contoh 1000000) dan teks `<strong>Rp1.000.000</strong>` (format rupiah dengan titik).
+- Deskripsi: paragraf `<p class="product-desc">`.
+- Fitur: daftar `<li>` di dalam `<details class="product-detail">`.
+- Foto: file di `assets/produk/`, ubah nama file pada `src`.
+- Kategori filter: atribut `data-cat` (bisnis, toko, berita, landing, custom, maintenance, layanan).
+- Produk berulang (maintenance/perpanjangan): atur `data-recurring="1"`.
+- ID unik: atribut `data-id` dan `data-add` harus sama dan tidak boleh dipakai dua kali.
+
+Keranjang disimpan di browser pengunjung, dan tombol "Pesan via WhatsApp" membuka chat berisi daftar pesanan.
