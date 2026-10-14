@@ -1,171 +1,131 @@
 (function () {
   'use strict';
-  var WA = 'https://wa.me/6285737681560?text=';
+  var WA = '6285737681560';
   var KEY = 'synergydev_cart';
+  var catalog = {};
+  (window.SD_PRODUCTS || []).forEach(function (p) { catalog[p.id] = p; });
   var cart = {};
-  var products = {};
-  var drawer = document.getElementById('cart-drawer');
-  var overlay = document.getElementById('cart-overlay');
+  var root = document.getElementById('cart-root');
   var itemsEl = document.getElementById('cart-items');
   var emptyEl = document.getElementById('cart-empty');
   var totalEl = document.getElementById('cart-total');
   var recEl = document.getElementById('cart-recurring');
   var toast = document.getElementById('toast');
-  var lastFocus = null;
+  var toastTimer = null;
 
   function rupiah(n) { return 'Rp' + String(n).replace(/\B(?=(\d{3})+(?!\d))/g, '.'); }
-
-  // Baca data produk dari kartu di halaman
-  document.querySelectorAll('.product').forEach(function (el) {
-    products[el.dataset.id] = {
-      id: el.dataset.id,
-      name: el.dataset.name,
-      price: parseInt(el.dataset.price, 10),
-      recurring: el.dataset.recurring === '1',
-      img: el.querySelector('img') ? el.querySelector('img').getAttribute('src') : ''
-    };
-  });
+  function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
 
   function load() {
     try { cart = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) { cart = {}; }
-    // buang item yang sudah tidak ada
-    Object.keys(cart).forEach(function (k) { if (!products[k]) delete cart[k]; });
+    Object.keys(cart).forEach(function (k) { if (!catalog[k]) delete cart[k]; });
   }
   function save() { try { localStorage.setItem(KEY, JSON.stringify(cart)); } catch (e) {} }
-
   function count() { return Object.keys(cart).reduce(function (s, k) { return s + cart[k]; }, 0); }
 
-  function updateBadges() {
+  function badges() {
     var c = count();
-    document.querySelectorAll('.cart-count').forEach(function (b) {
-      b.textContent = c > 0 ? String(c) : '';
-      if (c > 0) b.removeAttribute('data-zero'); else b.setAttribute('data-zero', '');
+    document.querySelectorAll('[data-cart-count]').forEach(function (b) {
+      b.textContent = c;
+      b.hidden = c === 0;
     });
   }
 
   function showToast(msg) {
+    if (!toast) return;
     toast.textContent = msg;
-    toast.classList.add('is-show');
-    clearTimeout(showToast._t);
-    showToast._t = setTimeout(function () { toast.classList.remove('is-show'); }, 1800);
+    toast.hidden = false;
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { toast.hidden = true; }, 1800);
   }
 
   function render() {
-    itemsEl.innerHTML = '';
-    var oneTime = 0, rec = [];
+    if (!itemsEl) return;
+    var html = '', oneTime = 0, rec = [];
     Object.keys(cart).forEach(function (id) {
-      var p = products[id], qty = cart[id];
-      var li = document.createElement('li');
-      li.className = 'cart-item';
-      li.innerHTML =
-        '<img src="' + p.img + '" alt="" width="64" height="64">' +
-        '<div><div class="cart-item-name"></div>' +
-        '<div class="cart-item-price">' + rupiah(p.price) + (p.recurring ? ' / siklus' : '') + '</div>' +
-        '<div class="qty"><button type="button" data-act="dec" data-id="' + id + '" aria-label="Kurangi">−</button>' +
-        '<span>' + qty + '</span>' +
-        '<button type="button" data-act="inc" data-id="' + id + '" aria-label="Tambah">+</button></div></div>' +
-        '<div><button class="cart-remove" type="button" data-act="del" data-id="' + id + '">Hapus</button></div>';
-      li.querySelector('.cart-item-name').textContent = p.name;
-      itemsEl.appendChild(li);
-      if (p.recurring) rec.push(p.name + ' (' + qty + 'x)'); else oneTime += p.price * qty;
+      var p = catalog[id], q = cart[id];
+      html += '<li class="flex gap-4 border-b border-slate-200 py-4">' +
+        '<img src="' + p.img + '" alt="" width="72" height="72" class="h-18 w-18 shrink-0 rounded-xl bg-slate-50 object-contain" style="width:72px;height:72px">' +
+        '<div class="min-w-0 flex-1"><p class="font-semibold leading-snug text-navy">' + esc(p.name) + '</p>' +
+        '<p class="text-sm text-muted">' + rupiah(p.price) + (p.rec ? ' / siklus' : '') + '</p>' +
+        '<div class="mt-2 flex items-center gap-3">' +
+        '<button type="button" data-act="dec" data-id="' + id + '" aria-label="Kurangi" class="h-8 w-8 rounded-full border border-slate-300 font-bold text-navy hover:bg-slate-100">−</button>' +
+        '<span class="min-w-6 text-center font-bold text-navy">' + q + '</span>' +
+        '<button type="button" data-act="inc" data-id="' + id + '" aria-label="Tambah" class="h-8 w-8 rounded-full border border-slate-300 font-bold text-navy hover:bg-slate-100">+</button>' +
+        '<button type="button" data-act="del" data-id="' + id + '" class="ml-auto text-sm font-semibold text-red-600 hover:underline">Hapus</button>' +
+        '</div></div></li>';
+      if (p.rec) rec.push(p.name + ' (' + q + 'x)'); else oneTime += p.price * q;
     });
+    itemsEl.innerHTML = html;
     emptyEl.hidden = Object.keys(cart).length > 0;
     totalEl.textContent = rupiah(oneTime);
-    if (rec.length) { recEl.hidden = false; recEl.textContent = 'Plus biaya berulang per siklus: ' + rec.join(', '); }
-    else { recEl.hidden = true; recEl.textContent = ''; }
-    updateBadges();
+    recEl.hidden = rec.length === 0;
+    recEl.textContent = rec.length ? 'Plus biaya berulang per siklus: ' + rec.join(', ') : '';
+    badges();
   }
 
   function add(id) {
-    if (!products[id]) return;
+    if (!catalog[id]) return;
     cart[id] = (cart[id] || 0) + 1;
     save(); render();
-    var btn = document.querySelector('[data-add="' + id + '"]');
-    if (btn) {
-      btn.classList.add('is-added');
-      btn.textContent = '✓ Ditambahkan';
-      clearTimeout(btn._t);
-      btn._t = setTimeout(function () { btn.classList.remove('is-added'); btn.textContent = '+ Keranjang'; }, 1400);
-    }
-    showToast('Ditambahkan: ' + products[id].name);
+    document.querySelectorAll('[data-add="' + id + '"]').forEach(function (btn) {
+      var old = btn.getAttribute('data-label') || btn.textContent;
+      btn.setAttribute('data-label', old);
+      btn.textContent = 'Ditambahkan ✓';
+      setTimeout(function () { btn.textContent = old; }, 1400);
+    });
+    showToast('Ditambahkan: ' + catalog[id].name);
   }
 
-  function change(id, delta) {
+  function change(id, d) {
     if (!cart[id]) return;
-    cart[id] += delta;
+    cart[id] += d;
     if (cart[id] <= 0) delete cart[id];
     save(); render();
-  }
-
-  function openCart() {
-    lastFocus = document.activeElement;
-    drawer.hidden = false; overlay.hidden = false;
-    document.querySelectorAll('.cart-btn').forEach(function (b) { b.setAttribute('aria-expanded', 'true'); });
-    document.body.style.overflow = 'hidden';
-    drawer.querySelector('.cart-close').focus();
-  }
-  function closeCart() {
-    drawer.hidden = true; overlay.hidden = true;
-    document.querySelectorAll('.cart-btn').forEach(function (b) { b.setAttribute('aria-expanded', 'false'); });
-    document.body.style.overflow = '';
-    if (lastFocus) lastFocus.focus();
   }
 
   function checkout() {
     var ids = Object.keys(cart);
     if (!ids.length) { showToast('Keranjang masih kosong'); return; }
     var lines = ['Halo SynergyDev, saya ingin memesan:', ''];
-    var oneTime = 0, rec = [];
+    var oneTime = 0, rec = false;
     ids.forEach(function (id, i) {
-      var p = products[id], q = cart[id];
-      lines.push((i + 1) + '. ' + p.name + ' x' + q + ' - ' + rupiah(p.price * q) + (p.recurring ? ' / siklus' : ''));
-      if (p.recurring) rec.push(p.name); else oneTime += p.price * q;
+      var p = catalog[id], q = cart[id];
+      lines.push((i + 1) + '. ' + p.name + ' x' + q + ' - ' + rupiah(p.price * q) + (p.rec ? ' / siklus' : ''));
+      if (p.rec) rec = true; else oneTime += p.price * q;
     });
-    lines.push('');
-    lines.push('Estimasi total sekali bayar: ' + rupiah(oneTime));
-    if (rec.length) lines.push('Plus biaya berulang per siklus untuk layanan maintenance/perpanjangan.');
-    lines.push('');
-    lines.push('Mohon info lanjutan dan jadwal konsultasi. Terima kasih.');
-    window.open(WA + encodeURIComponent(lines.join('\n')), '_blank', 'noopener,noreferrer');
+    lines.push('', 'Estimasi total sekali bayar: ' + rupiah(oneTime));
+    if (rec) lines.push('Plus biaya berulang per siklus.');
+    lines.push('', 'Mohon info lanjutan dan jadwal konsultasi. Terima kasih.');
+    window.open('https://wa.me/' + WA + '?text=' + encodeURIComponent(lines.join('\n')), '_blank', 'noopener,noreferrer');
   }
 
-  // Event: tombol tambah produk
   document.addEventListener('click', function (e) {
     var t = e.target;
     var addBtn = t.closest && t.closest('[data-add]');
-    if (addBtn) { add(addBtn.dataset.add); return; }
-    var cartBtn = t.closest && t.closest('.cart-btn');
-    if (cartBtn) { openCart(); return; }
-    if (t.closest && t.closest('.cart-close')) { closeCart(); return; }
-    if (t === overlay) { closeCart(); return; }
+    if (addBtn) { add(addBtn.getAttribute('data-add')); return; }
+    var opener = t.closest && t.closest('[data-open="cart"]');
+    if (opener) { render(); window.SDModal && window.SDModal.open('cart-root'); return; }
     var act = t.closest && t.closest('[data-act]');
     if (act) {
-      var id = act.dataset.id;
-      if (act.dataset.act === 'inc') change(id, 1);
-      if (act.dataset.act === 'dec') change(id, -1);
-      if (act.dataset.act === 'del') { delete cart[id]; save(); render(); }
+      var id = act.getAttribute('data-id');
+      var a = act.getAttribute('data-act');
+      if (a === 'inc') change(id, 1);
+      if (a === 'dec') change(id, -1);
+      if (a === 'del') { delete cart[id]; save(); render(); }
       return;
     }
-    if (t.id === 'cart-checkout') { checkout(); return; }
-    if (t.id === 'cart-clear') { cart = {}; save(); render(); showToast('Keranjang dikosongkan'); return; }
+    if (t.closest && t.closest('#cart-checkout')) { checkout(); return; }
+    if (t.closest && t.closest('#cart-clear')) { cart = {}; save(); render(); showToast('Keranjang dikosongkan'); return; }
     var chip = t.closest && t.closest('[data-filter]');
-    if (chip) { filterProducts(chip.dataset.filter, chip); }
+    if (chip) {
+      var cat = chip.getAttribute('data-filter');
+      document.querySelectorAll('[data-filter]').forEach(function (c) { c.setAttribute('aria-pressed', String(c === chip)); });
+      document.querySelectorAll('.product').forEach(function (el) {
+        el.hidden = !(cat === 'semua' || el.getAttribute('data-cat') === cat);
+      });
+    }
   });
-
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && !drawer.hidden) closeCart();
-  });
-
-  // Filter kategori
-  function filterProducts(cat, chip) {
-    document.querySelectorAll('.chip').forEach(function (c) {
-      var on = c === chip;
-      c.classList.toggle('is-active', on);
-    });
-    document.querySelectorAll('.product').forEach(function (el) {
-      el.hidden = !(cat === 'semua' || el.dataset.cat === cat);
-    });
-  }
 
   load();
   render();
