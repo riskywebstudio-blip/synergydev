@@ -1,0 +1,39 @@
+[hidden]{display:none!important}
+html{scroll-behavior:smooth;scroll-padding-top:6rem}
+.skip-link{position:absolute;left:-9999px;top:0;background:#0A1A3A;color:#fff;padding:.6rem 1rem;z-index:200}
+.skip-link:focus{left:1rem;top:1rem}
+:focus-visible{outline:3px solid #0070FF;outline-offset:3px;border-radius:6px}
+
+/* Bingkai blob untuk foto */
+.blob{border-radius:58% 42% 55% 45% / 48% 56% 44% 52%;overflow:hidden}
+.blob img{width:100%;height:100%;object-fit:cover}
+
+/* Animasi */
+.float-a{animation:floatY 5s ease-in-out infinite}
+.float-b{animation:floatY 6.5s ease-in-out infinite reverse}
+@keyframes floatY{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+.zoom-slow{animation:zoomSlow 14s ease-in-out infinite alternate}
+@keyframes zoomSlow{from{transform:scale(1)}to{transform:scale(1.06)}}
+.ring-wa{animation:ringWa 2s ease-out infinite}
+@keyframes ringWa{0%{box-shadow:0 0 0 0 rgba(37,211,102,.6)}100%{box-shadow:0 0 0 18px rgba(37,211,102,0)}}
+.js .reveal{opacity:0;translate:0 24px;transition:opacity .7s ease,translate .7s cubic-bezier(.2,.7,.2,1)}
+.js .reveal.is-in{opacity:1;translate:0 0}
+.bar{transition:width 1.4s ease}
+
+/* Filter chip (aria-pressed) */
+.chip{border:1px solid #e2e8f0;background:#fff;color:#0A1A3A;padding:.5rem 1rem;border-radius:999px;font-weight:600;font-size:.9rem;cursor:pointer;transition:all .2s ease}
+.chip:hover{border-color:#bcd3ff;color:#0070FF}
+.chip[aria-pressed="true"]{background:#0A1A3A;border-color:#0A1A3A;color:#fff}
+
+/* Accordion native */
+details>summary{list-style:none}
+details>summary::-webkit-details-marker{display:none}
+details[open] .faq-icon{transform:rotate(45deg)}
+
+/* Toast */
+#toast{transform:translateX(-50%)}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+  .js .reveal{opacity:1;translate:none}
+}
